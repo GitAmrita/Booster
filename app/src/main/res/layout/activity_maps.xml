@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context="amrita.booster.MapsActivity" >
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:layout_weight="1"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            android:id="@+id/regular"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Regular 87"
+            style="@style/OrderCardViewHeader"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:id="@+id/premium"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            style="@style/OrderCardViewHeader"
+            android:text="Premium 91"
+            android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            style="@style/OrderCardView"
+            android:text="$2.40"
+            android:layout_below="@+id/regular"/>
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="$2.80"
+            style="@style/OrderCardView"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/premium"/>
+
+    </RelativeLayout>
+    <Button
+        android:id="@+id/options"
+        android:layout_weight="0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:background="@color/colorAccent"
+        android:onClick="onClickOptionsBtn"/>
+</LinearLayout>
+
+

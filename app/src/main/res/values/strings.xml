@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Booster</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="cardholder_name_label">Cardholder\'s Name</string>
+    <string name="cc_number_label">Credit Card Number</string>
+    <string name="cc_cvs_label">Security Code</string>
+    <string name="cc_expiry_label">Expires MMYYYY</string>
+    <string name="email">Email</string>
+    <string name="phone_label">Contact Phone Number (Optional)</string>
+    <string name="security_label">Payment secured with 256-bit SSL encryption</string>
+</resources>

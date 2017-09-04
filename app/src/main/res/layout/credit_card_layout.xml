@@ -1,0 +1,60 @@
+<RelativeLayout
+    android:id="@+id/main_layout"
+    style="@style/CheckoutSection"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="amrita.booster.PlaceOrderActivity">
+
+    <EditText
+        android:id="@+id/card_information_name_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:hint="@string/cardholder_name_label"/>
+
+    <EditText
+        android:id="@+id/card_information_number_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:layout_below="@id/card_information_name_field"
+        android:hint="@string/cc_number_label"/>
+
+    <LinearLayout
+        android:id="@+id/card_information_info_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_information_number_field"
+        android:orientation="horizontal"
+        android:weightSum="1.0">
+
+        <EditText
+            android:id="@+id/card_information_info_cvc_field"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:inputType="number"
+            android:hint="@string/cc_cvs_label"/>
+
+        <EditText
+            android:id="@+id/card_information_info_expiry_field"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:inputType="number"
+            android:hint="@string/cc_expiry_label"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_information_info_container"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="12dp"
+        android:text="@string/security_label"/>
+
+</RelativeLayout>
