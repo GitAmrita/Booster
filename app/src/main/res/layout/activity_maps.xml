@@ -59,6 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Next"
+        android:layout_margin="10dp"
         android:background="@color/colorAccent"
         android:onClick="onClickOptionsBtn"/>
 </LinearLayout>

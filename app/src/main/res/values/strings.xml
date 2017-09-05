@@ -8,4 +8,6 @@
     <string name="email">Email</string>
     <string name="phone_label">Contact Phone Number (Optional)</string>
     <string name="security_label">Payment secured with 256-bit SSL encryption</string>
+    <string name="schedule_on_time">Congratulations! your boost is scheduled for</string>
+    <string name="schedule_later">You request time has elapsed. We have scheduled it for</string>
 </resources>

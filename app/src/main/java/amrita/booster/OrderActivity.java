@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import java.util.Locale;
@@ -37,6 +38,7 @@ public class OrderActivity extends AppCompatActivity {
     private CardView addressCardView;
     private CardView creditCardView;
     private String deliveryWindow;
+    private String deliveryDate;
     private CreditCard creditCard;
     private ProgressBar progressBar;
     private String deliveryTime;
@@ -52,6 +54,7 @@ public class OrderActivity extends AppCompatActivity {
         latitude = intent.getDoubleExtra("latitude", 0);
         longitude = intent.getDoubleExtra("longitude", 0);
         deliveryWindow = intent.getStringExtra("deliveryTime");
+        deliveryDate = intent.getStringExtra("deliveryDate");
         Bundle bundle = getIntent().getExtras();
         if(bundle != null)
             creditCard = (CreditCard) bundle.getSerializable("creditCard");
@@ -69,8 +72,7 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     private void setDeliverySchedule() {
-        Calendar currentCal = deliveryWindow.equals("Morning") ? getMorningDeliverySchedule()
-                : getAfternoonDeliverySchedule();
+        Calendar currentCal = getDeliverySchedule();
         deliveryTime = String.valueOf(currentCal.getTime());
         deliveryScheduleMessage.setText(deliveryMessage);
         deliverySchedule.setText(deliveryTime);
@@ -85,36 +87,31 @@ public class OrderActivity extends AppCompatActivity {
         addressCardView.setVisibility(View.VISIBLE);
     }
 
-    private Calendar getMorningDeliverySchedule() {
+    private Calendar getDeliverySchedule() {
         Random r = new Random();
-        int hourOfDay = r.nextInt(6);
+        int hourOfDay = r.nextInt(24);
         Calendar current = Calendar.getInstance();
-        int currentHours = current.get( Calendar.HOUR_OF_DAY );
-        Calendar scheduled = Calendar.getInstance();
-        scheduled.add(Calendar.HOUR_OF_DAY, hourOfDay);
-        int scheduledHours = scheduled.get( Calendar.HOUR_OF_DAY );
-        if (currentHours >= 12) {
-            deliveryMessage = "Oops! you requested your boost in the afternoon. It is scheduled for: ";
-        } else if (scheduledHours >= 12) {
-            deliveryMessage = "Sorry! no more slots available for morning. It is scheduled for: ";
+        Calendar scheduled = convertStringToDate();
+        if (current.getTimeInMillis() > scheduled.getTimeInMillis()) {
+            scheduled = current;
+            scheduled.add(Calendar.HOUR_OF_DAY, hourOfDay);
+            deliveryMessage = getResources().getString(R.string.schedule_later);
         } else {
-            deliveryMessage = "Congratulations! your boost is scheduled for ";
+            scheduled.add(Calendar.HOUR_OF_DAY, hourOfDay);
+            deliveryMessage = getResources().getString(R.string.schedule_on_time);
         }
         return scheduled;
     }
 
-    private Calendar getAfternoonDeliverySchedule() {
-        Random r = new Random();
-        int hourOfDay = r.nextInt(6);
-        Calendar scheduled = Calendar.getInstance();
-        scheduled.add(Calendar.HOUR_OF_DAY, hourOfDay);
-        int scheduledHours = scheduled.get( Calendar.HOUR_OF_DAY );
-        if (scheduledHours < 12) {
-            deliveryMessage = "Sorry! no more slots available for afternoon. It is scheduled for: ";
-        } else {
-            deliveryMessage = "Congratulations! your boost is scheduled for ";
+    private Calendar convertStringToDate() {
+        try {
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy", Locale.ENGLISH);
+            cal.setTime(sdf.parse(deliveryDate));
+            return cal;
+        } catch (Exception e) {
+            return null;
         }
-        return scheduled;
     }
 
     private void getAddressFromLatLong() {

@@ -15,11 +15,25 @@
             style="@style/OrderCardViewHeader"
             android:text="Time Of Delivery"/>
 
-        <RadioGroup
-            android:id="@+id/radioDeliveryTime"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/delivery_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:focusable="false"
+            android:layout_alignParentLeft="true"
+            android:hint="MM/dd/yy"/>
+
+        <RadioGroup
+            android:id="@+id/radio_delivery_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:orientation="horizontal">
 
             <RadioButton
@@ -36,6 +50,10 @@
                 android:text="Afternoon" />
 
         </RadioGroup>
+
+    </RelativeLayout>
+
+
 
         <android.support.v7.widget.CardView
             android:id="@+id/address_card_view"

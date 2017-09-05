@@ -1,14 +1,21 @@
 package amrita.booster;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 
 /**
@@ -20,11 +27,13 @@ public class PlaceOrderActivity extends AppCompatActivity {
     private EditText cardNumber;
     private EditText securityCode;
     private EditText cardExpiry;
+    private EditText deliveryDate;
     private RadioGroup deliveryTime;
     private double latitude;
     private double longitude;
     private CreditCard creditCard;
     private String errorMessage;
+    Calendar myCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +62,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             intent.putExtra("latitude", latitude);
             intent.putExtra("longitude", longitude);
             intent.putExtra("deliveryTime", deliveryWindow);
+            intent.putExtra("deliveryDate", deliveryDate.getText().toString());
             Bundle bundle = new Bundle();
             bundle.putSerializable("creditCard", creditCard);
             intent.putExtras(bundle);
@@ -65,7 +75,33 @@ public class PlaceOrderActivity extends AppCompatActivity {
         cardNumber = (EditText) findViewById(R.id.card_information_number_field);
         securityCode = (EditText) findViewById(R.id.card_information_info_cvc_field);
         cardExpiry = (EditText) findViewById(R.id.card_information_info_expiry_field);
-        deliveryTime = (RadioGroup) findViewById(R.id.radioDeliveryTime);
+        deliveryTime = (RadioGroup) findViewById(R.id.radio_delivery_time);
+        deliveryDate = (EditText) findViewById(R.id.delivery_date);
+        final DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateDeliveryRequestDate();
+            }
+        };
+
+        deliveryDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(PlaceOrderActivity.this, dateSetListener, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+    }
+
+    private void updateDeliveryRequestDate() {
+        String myFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        deliveryDate.setText(sdf.format(myCalendar.getTime()));
     }
 
     private boolean validateCreditCard() {
