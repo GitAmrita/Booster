@@ -78,10 +78,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     android.Manifest.permission.ACCESS_COARSE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
                 buildGoogleApiClient();
-                // Although the user’s location will update automatically on a regular basis, you can also
-                // give your users a way of triggering a location update manually. Here, we’re adding a
-                // ‘My Location’ button to the upper-right corner of our app; when the user taps this button,
-                // the camera will update and center on the user’s current location//
                mMap.setMyLocationEnabled(true);
             }
         } else {
@@ -98,38 +94,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .addConnectionCallbacks(this)
                 .addApi(LocationServices.API)
                 .build();
-
         // Connect to Google Play Services, by calling the connect() method//
         mGoogleApiClient.connect();
     }
 
     @TargetApi(23)
     public boolean checkLocationPermission() {
-        // In Android 6.0 and higher you need to request permissions at runtime, and the user has
-        // the ability to grant or deny each permission. Users can also revoke a previously-granted
-        // permission at any time, so your app must always check that it has access to each
-        // permission, before trying to perform actions that require that permission. Here, we’re using
-        // ContextCompat.checkSelfPermission to check whether this app currently has the
-        // ACCESS_COARSE_LOCATION permission
-
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION)
-                // If your app does have access to COARSE_LOCATION, then this method will return
-                // PackageManager.PERMISSION_GRANTED//
                 != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     android.Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                // If your app doesn’t have this permission, then you’ll need to request it by calling
-                // the ActivityCompat.requestPermissions method//
-                requestPermissions(new String[] {
-                                android.Manifest.permission.ACCESS_COARSE_LOCATION
-                        },
-                        MY_PERMISSIONS_REQUEST_LOCATION);
+                Toast.makeText(this, "Location permission allows us to access location data. Please " +
+                        "allow in App Settings for additional functionality.", Toast.LENGTH_LONG).show();
             } else {
-                // Request the permission by launching Android’s standard permissions dialog.
-                // If you want to provide any additional information, such as why your app requires this
-                // particular permission, then you’ll need to add this information before calling
-                // requestPermission //
                 requestPermissions(new String[] {
                                 android.Manifest.permission.ACCESS_COARSE_LOCATION
                         },
@@ -144,7 +122,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(2000);
+        mLocationRequest.setSmallestDisplacement(2000);
+       // mLocationRequest.setInterval(2000);
         if (ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -186,7 +165,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         mMap.setMyLocationEnabled(true);
                     }
                 } else {
-
+                    Toast.makeText(this, "Cannot use this app without requested permission",
+                            Toast.LENGTH_SHORT).show();
+                    this.finish();
                 }
                 return;
             }
@@ -198,8 +179,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mLocationMarker.remove();
         }
         mLocationMarker = mMap.addMarker(new MarkerOptions().position(currentLocation).title(
-                "Your current location").draggable(true));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 14.0f));
+                "Your current location"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15.0f));
     }
 
     public void onClickOptionsBtn(View view) {
