@@ -8,16 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="CheckoutField">
-        <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingRight">12dp</item>
-        <item name="android:paddingLeft">14dp</item>
-        <item name="android:background">@drawable/border_left_bottom_right_background</item>
-        <item name="android:inputType">textCapWords</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColorHint">@color/gray500</item>
-    </style>
-
     <style name="CheckoutSection">
         <item name="android:background">@android:color/white</item>
     </style>
@@ -33,24 +23,7 @@
         <item name="android:textSize">9sp</item>
     </style>
 
-    <style name="CheckoutFieldDate">
-        <item name="android:inputType">number</item>
-    </style>
 
-    <style name="CheckoutFieldEmail">
-        <item name="android:inputType">textEmailAddress</item>
-    </style>
-
-    <style name="CheckoutFieldPhone">
-        <item name="android:inputType">phone</item>
-    </style>
-
-    <style name="CheckoutFieldNumber">
-        <item name="android:inputType">number</item>
-        <item name="android:background">@drawable/bg_rectangle_border_white</item>
-        <item name="android:editable">true</item>
-        <item name="android:enabled">true</item>
-    </style>
 
     <style name="OrderCardView">
         <item name="android:textColor">@color/gray700</item>
